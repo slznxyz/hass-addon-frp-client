@@ -20,7 +20,7 @@ arch:
   - i386
 options:
   serverAddr: "vip.slzn999.tk"
-  serverPort: 17000
+  serverPort: 17010
   user: "user1"
   metadatas.token: "123456789"
   #webServerPort: 7500
