@@ -1,5 +1,5 @@
-serverAddr = "your_server_addr"
-serverPort = 7000
+serverAddr = "vip.slzn999.tk"
+serverPort = 17000
 user = "user1"
 metadatas.token = "123456789"
 
