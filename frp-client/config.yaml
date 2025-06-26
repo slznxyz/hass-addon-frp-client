@@ -23,9 +23,6 @@ options:
   serverPort: 17010
   user: "user1"
   metadatas.token: "123456789"
-  #webServerPort: 7500
-  #webServerUser: "admin"
-  #webServerPassword: "123456789"
   subDomain: "example"
   proxyName: "homeassistant"
 schema:
@@ -33,8 +30,5 @@ schema:
   serverPort: int
   user: str
   metadatas.token: str
-  #webServerPort: int
-  #webServerUser: str
-  #webServerPassword: str
   subDomain: str
   proxyName: str
