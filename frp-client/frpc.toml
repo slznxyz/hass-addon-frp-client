@@ -1,7 +1,7 @@
 serverAddr = "your_server_addr"
 serverPort = 7000
-auth.method = "token"
-auth.token = "123456789"
+user = "user1"
+metadatas.token = "123456789"
 
 log.to = "/share/frpc.log"
 # trace, debug, info, warn, error
