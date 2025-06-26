@@ -14,7 +14,8 @@ sed -i "s/serverAddr = \"vip.slzn999.tk\"/serverAddr = \"$(bashio::config 'serve
 sed -i "s/serverPort = 17010/serverPort = $(bashio::config 'serverPort')/" $CONFIG_PATH
 sed -i "s/user = \"user1\"/user = \"$(bashio::config 'user')\"/" $CONFIG_PATH
 sed -i "s/metadatas.token = \"123456789\"/metadatas.token = \"$(bashio::config 'metadatastoken')\"/" $CONFIG_PATH
-sed -i "s/subDomains = \[\"your_domain\"\]/subDomains = [\"$(bashio::config 'subDomain')\"]/" $CONFIG_PATH
+#sed -i "s/subDomains = \[\"your_domain\"\]/subDomains = [\"$(bashio::config 'subDomain')\"]/" $CONFIG_PATH
+sed -i "s/subDomains = \[\"your_domain\"\]/subdomain = \"$(bashio::config 'subDomain')\"/" $CONFIG_PATH
 sed -i "s/name = \"your_proxy_name\"/name = \"$(bashio::config 'proxyName')\"/" $CONFIG_PATH
 
 
@@ -24,7 +25,7 @@ cat $CONFIG_PATH
 
 cd /usr/src
 ./frpc -c $CONFIG_PATH & WAIT_PIDS+=($!)
-
+touch /share/frpc.log
 tail -f /share/frpc.log &
 
 trap "stop_frpc" SIGTERM SIGHUP
