@@ -12,11 +12,9 @@ bashio::log.info "Copying configuration."
 cp $DEFAULT_CONFIG_PATH $CONFIG_PATH
 sed -i "s/serverAddr = \"vip.slzn999.tk\"/serverAddr = \"$(bashio::config 'serverAddr')\"/" $CONFIG_PATH
 sed -i "s/serverPort = 17010/serverPort = $(bashio::config 'serverPort')/" $CONFIG_PATH
-sed -i "s/auth.token = \"123456789\"/auth.token = \"$(bashio::config 'authToken')\"/" $CONFIG_PATH
-#sed -i "s/webServer.port = 7500/webServer.port = $(bashio::config 'webServerPort')/" $CONFIG_PATH
-#sed -i "s/webServer.user = \"admin\"/webServer.user = \"$(bashio::config 'webServerUser')\"/" $CONFIG_PATH
-#sed -i "s/webServer.password = \"123456789\"/webServer.password = \"$(bashio::config 'webServerPassword')\"/" $CONFIG_PATH
-sed -i "s/subDomains = \[\"your_domain\"\]/customDomains = [\"$(bashio::config 'customDomain')\"]/" $CONFIG_PATH
+sed -i "s/user = \"user1\"/user = \"$(bashio::config 'user')\"/" $CONFIG_PATH
+sed -i "s/metadatas.token = \"123456789\"/metadatas.token = \"$(bashio::config 'metadatastoken')\"/" $CONFIG_PATH
+sed -i "s/subDomains = \[\"your_domain\"\]/subDomains = [\"$(bashio::config 'customDomain')\"]/" $CONFIG_PATH
 sed -i "s/name = \"your_proxy_name\"/name = \"$(bashio::config 'proxyName')\"/" $CONFIG_PATH
 
 
