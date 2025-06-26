@@ -29,6 +29,6 @@ schema:
   serverAddr: str
   serverPort: int
   user: str
-  metadatas.token: str
+  metadatastoken: str
   subDomain: str
   proxyName: str
