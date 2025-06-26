@@ -1,4 +1,4 @@
-serverAddr = "vip.slzn999.tk"
+serverAddr = "your_server_addr"
 serverPort = 17000
 user = "user1"
 metadatas.token = "123456789"
@@ -17,7 +17,7 @@ log.maxDays = 3
 [[proxies]]
 name = "your_proxy_name"
 type = "http"
-customDomains = ["your_domain"]
+subDomains = ["your_domain"]
 transport.useEncryption = true
 transport.useCompression = true
 localPort = 8123
