@@ -19,8 +19,9 @@ arch:
   - armv7
   - i386
 options:
-  serverAddr: "example.com"
-  serverPort: 7000
+  serverAddr: "vip.slzn999.tk"
+  serverPort: 17000
+  user: "user1"
   metadatas.token: "123456789"
   #webServerPort: 7500
   #webServerUser: "admin"
@@ -30,9 +31,10 @@ options:
 schema:
   serverAddr: str
   serverPort: int
-  authToken: str
-  webServerPort: int
-  webServerUser: str
-  webServerPassword: str
-  customDomain: str
+  user: str
+  metadatas.token: str
+  #webServerPort: int
+  #webServerUser: str
+  #webServerPassword: str
+  subDomain: str
   proxyName: str
