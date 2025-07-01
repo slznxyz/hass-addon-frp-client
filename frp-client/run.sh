@@ -1,23 +1,55 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
 WAIT_PIDS=()
 CONFIG_PATH='/share/frpc.toml'
-DEFAULT_CONFIG_PATH='/frpc.toml'
 
 function stop_frpc() {
     bashio::log.info "Shutdown frpc client"
     kill -15 "${WAIT_PIDS[@]}"
 }
 
-bashio::log.info "Copying configuration."
-cp $DEFAULT_CONFIG_PATH $CONFIG_PATH
-sed -i "s/serverAddr = \"vip.slzn999.tk\"/serverAddr = \"$(bashio::config 'serverAddr')\"/" $CONFIG_PATH
-sed -i "s/serverPort = 17010/serverPort = $(bashio::config 'serverPort')/" $CONFIG_PATH
-sed -i "s/user = \"user1\"/user = \"$(bashio::config 'user')\"/" $CONFIG_PATH
-sed -i "s/metadatas.token = \"123456789\"/metadatas.token = \"$(bashio::config 'metadatastoken')\"/" $CONFIG_PATH
-#sed -i "s/subDomains = \[\"your_domain\"\]/subDomains = [\"$(bashio::config 'subDomain')\"]/" $CONFIG_PATH
-sed -i "s/subDomains = \[\"your_domain\"\]/subdomain = \"$(bashio::config 'subDomain')\"/" $CONFIG_PATH
-sed -i "s/name = \"your_proxy_name\"/name = \"$(bashio::config 'proxyName')\"/" $CONFIG_PATH
+bashio::log.info "Generating configuration."
 
+# 读取用户设置
+serverAddr=$(bashio::config 'serverAddr')
+serverPort=$(bashio::config 'serverPort')
+user=$(bashio::config 'user')
+token=$(bashio::config 'token')
+proxyName=$(bashio::config 'proxyName')
+subdomain=$(bashio::config 'subdomain')
+remotePort=$(bashio::config 'remotePort')
+if [ -z "$remotePort" ]; then
+  remotePort=6000
+fi
+
+# 生成新版0.62.1格式的frpc.toml
+cat <<EOF > $CONFIG_PATH
+serverAddr = "$serverAddr"
+serverPort = $serverPort
+user = "$user"
+metadatas.token = "$token"
+
+log.level = "info"
+log.to = "/share/frpc.log"
+log.maxDays = 3
+
+[[proxies]]
+name = "$proxyName"
+type = "http"
+subdomain = "$subdomain"
+localIP = "127.0.0.1"
+localPort = 8123
+transport.useEncryption = true
+transport.useCompression = true
+
+[[proxies]]
+name = "ssh"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = $remotePort
+transport.useEncryption = true
+transport.useCompression = true
+EOF
 
 bashio::log.info "Starting frp client"
 
@@ -25,6 +57,8 @@ cat $CONFIG_PATH
 
 cd /usr/src
 ./frpc -c $CONFIG_PATH & WAIT_PIDS+=($!)
+
+# 确保日志文件存在
 touch /share/frpc.log
 tail -f /share/frpc.log &
 
