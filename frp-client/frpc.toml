@@ -1,27 +1,30 @@
-serverAddr = "vip.slzn999.tk"
-serverPort = 17010
+serverAddr = "example.com"
+serverPort = 7000
 user = "user1"
 metadatas.token = "123456789"
 
+log.level = "info"
 log.to = "/share/frpc.log"
-# trace, debug, info, warn, error
-log.level = "trace"
 log.maxDays = 3
 
-# transport.tls.enable = false
-# transport.tls.certFile = "/share/frp/fullchain.pem"
-# transport.tls.keyFile = "/share/frp/privkey.pem"
-# transport.tls.trustedCaFile = "/share/frp/fullchain.pem"
-# transport.tls.serverName = "your_server_name"
-
 [[proxies]]
-name = "your_proxy_name"
+name = "homeassistant"
 type = "http"
-subDomains = ["your_domain"]
+subdomain = "example"
+localIP = "127.0.0.1"
+localPort = 8123
 transport.useEncryption = true
 transport.useCompression = true
-localPort = 8123
-localIP = "0.0.0.0"
+
+[[proxies]]
+name = "ssh"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 6000
+transport.useEncryption = true
+transport.useCompression = true
+
 
 # [proxies.plugin]
 # type = "https2http"
